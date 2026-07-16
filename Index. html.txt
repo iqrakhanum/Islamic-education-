@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Islamic Education</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f8e9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: darkgreen;
+        }
+
+        h2 {
+            text-align: center;
+            color: green;
+        }
+
+        #day {
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .question {
+            background-color: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+        }
+
+        .question p {
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            background-color: green;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #result {
+            background-color: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            color: darkgreen;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>🕌 Islamic Education</h1>
+
+    <h2>📅 Daily Islamic Quiz</h2>
+
+    <p id="day"></p>
+
+    <form id="quizForm"></form>
+
+    <button type="button" onclick="checkQuiz()">
+        Submit Quiz
+    </button>
+
+    <div id="result"></div>
+
+
+    <script>
+
+        var questionBank = [
+
+            {
+                q: "Islam ke kitne pillars hain?",
+                a: "5",
+                options: ["5", "3", "7"]
+            },
+
+            {
+                q: "Muslims din me kitni farz namazen parhte hain?",
+                a: "5",
+                options: ["5", "3", "7"]
+            },
+
+            {
+                q: "Islam ki holy book ka naam kya hai?",
+                a: "Quran",
+                options: ["Quran", "Bible", "Torah"]
+            },
+
+            {
+                q: "Quran kis Nabi par nazil hua?",
+                a: "Hazrat Muhammad (PBUH)",
+                options: [
+                    "Hazrat Muhammad (PBUH)",
+                    "Hazrat Musa (A.S)",
+                    "Hazrat Isa (A.S)"
+                ]
+            },
+
+            {
+                q: "Roza kis Islamic month me rakha jata hai?",
+                a: "Ramadan",
+                options: ["Ramadan", "Muharram", "Shawwal"]
+            },
+
+            {
+                q: "Islam ke pehle Khalifa ka naam kya tha?",
+                a: "Hazrat Abu Bakr (R.A)",
+                options: [
+                    "Hazrat Abu Bakr (R.A)",
+                    "Hazrat Umar (R.A)",
+                    "Hazrat Ali (R.A)"
+                ]
+            },
+
+            {
+                q: "Hajj kis city me hota hai?",
+                a: "Makkah",
+                options: ["Makkah", "Madinah", "Taif"]
+            },
+
+            {
+                q: "Quran me kitni Surahs hain?",
+                a: "114",
+                options: ["114", "100", "120"]
+            },
+
+            {
+                q: "Jumma kis din hota hai?",
+                a: "Friday",
+                options: ["Friday", "Monday", "Sunday"]
+            },
+
+            {
+                q: "Islam me charity ko kya kehte hain?",
+                a: "Zakat",
+                options: ["Zakat", "Salah", "Hajj"]
+            },
+
+            {
+                q: "Quran kis language me nazil hua?",
+                a: "Arabic",
+                options: ["Arabic", "Urdu", "English"]
+            },
+
+            {
+                q: "Eid-ul-Fitr kis month ke baad aati hai?",
+                a: "Ramadan",
+                options: ["Ramadan", "Muharram", "Rajab"]
+            },
+
+            {
+                q: "Muslims kis taraf rukh karke namaz parhte hain?",
+                a: "Kaaba",
+                options: ["Kaaba", "Madinah", "Jerusalem"]
+            },
+
+            {
+                q: "Islam ka pehla Kalma kya kehlata hai?",
+                a: "Kalma Tayyaba",
+                options: [
+                    "Kalma Tayyaba",
+                    "Kalma Shahadat",
+                    "Kalma Tamjeed"
+                ]
+            },
+
+            {
+                q: "Hajj Islam ka konsa pillar hai?",
+                a: "5th",
+                options: ["5th", "2nd", "3rd"]
+            },
+
+            {
+                q: "Quran ki pehli Surah ka naam kya hai?",
+                a: "Surah Al-Fatiha",
+                options: [
+                    "Surah Al-Fatiha",
+                    "Surah Al-Baqarah",
+                    "Surah Ikhlas"
+                ]
+            },
+
+            {
+                q: "Quran ki sabse lambi Surah kaunsi hai?",
+                a: "Al-Baqarah",
+                options: [
+                    "Al-Baqarah",
+                    "Al-Fatiha",
+                    "Al-Kawthar"
+                ]
+            },
+
+            {
+                q: "Quran me total paras kitne hain?",
+                a: "30",
+                options: ["30", "25", "40"]
+            },
+
+            {
+                q: "Quran parhne ko kya kehte hain?",
+                a: "Tilawat",
+                options: ["Tilawat", "Salah", "Zakat"]
+            },
+
+            {
+                q: "Namaz ko Arabic me kya kehte hain?",
+                a: "Salah",
+                options: ["Salah", "Zakat", "Sawm"]
+            },
+
+            {
+                q: "Fajr ki farz rakats kitni hain?",
+                a: "2",
+                options: ["2", "4", "3"]
+            },
+
+            {
+                q: "Zuhr ki farz rakats kitni hain?",
+                a: "4",
+                options: ["4", "2", "3"]
+            },
+
+            {
+                q: "Maghrib ki farz rakats kitni hain?",
+                a: "3",
+                options: ["3", "4", "2"]
+            },
+
+            {
+                q: "Namaz se pehle kya kiya jata hai?",
+                a: "Wudu",
+                options: ["Wudu", "Hajj", "Zakat"]
+            },
+
+            {
+                q: "Sabse pehle Nabi kaun thay?",
+                a: "Hazrat Adam (A.S)",
+                options: [
+                    "Hazrat Adam (A.S)",
+                    "Hazrat Nuh (A.S)",
+                    "Hazrat Ibrahim (A.S)"
+                ]
+            },
+
+            {
+                q: "Aakhri Nabi kaun hain?",
+                a: "Hazrat Muhammad (PBUH)",
+                options: [
+                    "Hazrat Muhammad (PBUH)",
+                    "Hazrat Musa (A.S)",
+                    "Hazrat Isa (A.S)"
+                ]
+            },
+
+            {
+                q: "Hazrat Nuh (A.S) ne kya banaya?",
+                a: "Kashti",
+                options: ["Kashti", "Qasr", "Masjid"]
+            },
+
+            {
+                q: "Hazrat Musa (A.S) ko kaunsi kitab di gayi?",
+                a: "Taurat",
+                options: ["Taurat", "Zabur", "Injeel"]
+            },
+
+            {
+                q: "Islamic calendar ka pehla month kaunsa hai?",
+                a: "Muharram",
+                options: ["Muharram", "Ramadan", "Shawwal"]
+            },
+
+            {
+                q: "Islamic calendar me kitne months hain?",
+                a: "12",
+                options: ["12", "10", "14"]
+            }
+
+        ];
+
+
+        var startDate = new Date(2026, 6, 16);
+
+        var today = new Date();
+
+        var daysPassed = Math.floor(
+            (today - startDate) / (1000 * 60 * 60 * 24)
+        );
+
+        if (daysPassed < 0) {
+            daysPassed = 0;
+        }
+
+        document.getElementById("day").innerHTML =
+            "Today's Quiz: Day " + (daysPassed + 1);
+
+
+        function randomNumber(seed) {
+
+            var x = Math.sin(seed++) * 10000;
+
+            return x - Math.floor(x);
+
+        }
+
+
+        var dailyQuestions = [];
+
+        var used = [];
+
+        var seed = daysPassed + 1;
+
+
+        while (dailyQuestions.length < 15) {
+
+            var number = Math.floor(
+                randomNumber(seed) * questionBank.length
+            );
+
+            seed++;
+
+            if (!used.includes(number)) {
+
+                used.push(number);
+
+                dailyQuestions.push(questionBank[number]);
+
+            }
+
+        }
+
+
+        var form = document.getElementById("quizForm");
+
+
+        for (var i = 0; i < dailyQuestions.length; i++) {
+
+            var question = dailyQuestions[i];
+
+            var options = [...question.options];
+
+            options.sort(function () {
+
+                return randomNumber(seed++) - 0.5;
+
+            });
+
+
+            var questionBox = document.createElement("div");
+
+            questionBox.className = "question";
+
+            var html = "<p>" +
+                (i + 1) + ". " + question.q +
+                "</p>";
+
+
+            for (var j = 0; j < options.length; j++) {
+
+                html +=
+                    "<label>" +
+                    "<input type='radio' name='q" + i +
+                    "' value='" + options[j] + "'>" +
+                    " " + options[j] +
+                    "</label>";
+
+            }
+
+
+            questionBox.innerHTML = html;
+
+            form.appendChild(questionBox);
+
+        }
+
+
+        function checkQuiz() {
+
+            var score = 0;
+
+            var answers = "<h3>✅ Correct Answers</h3>";
+
+
+            for (var i = 0; i < dailyQuestions.length; i++) {
+
+                var selected = document.querySelector(
+                    "input[name='q" + i + "']:checked"
+                );
+
+
+                if (
+                    selected &&
+                    selected.value == dailyQuestions[i].a
+                ) {
+
+                    score++;
+
+                }
+
+
+                answers +=
+                    "<p>" +
+                    (i + 1) + ". " +
+                    dailyQuestions[i].q +
+                    "<br>" +
+                    "<b>Correct Answer: " +
+                    dailyQuestions[i].a +
+                    "</b>" +
+                    "</p>";
+
+            }
+
+
+            document.getElementById("result").innerHTML =
+
+                "<h2>🎉 Your Score: " +
+                score + " / 15</h2>" +
+
+                answers;
+
+            window.scrollTo(0, document.body.scrollHeight);
+
+        }
+
+    </script>
+
+</body>
+
+</html>
